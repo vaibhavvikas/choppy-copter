@@ -1,0 +1,62 @@
+
+copter.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+frame-02
+  rotate: false
+  xy: 2, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
+frame-03
+  rotate: false
+  xy: 130, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
+frame-04
+  rotate: false
+  xy: 258, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
+frame-05
+  rotate: false
+  xy: 386, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
+frame-06
+  rotate: false
+  xy: 514, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
+frame-08
+  rotate: false
+  xy: 514, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
+frame-07
+  rotate: false
+  xy: 642, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
+frame-09
+  rotate: false
+  xy: 770, 2
+  size: 126, 111
+  orig: 126, 111
+  offset: 0, 0
+  index: -1
