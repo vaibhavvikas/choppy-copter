@@ -22,9 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.version.vaibhverty.GameMain;
-
-import java.util.Random;
+import com.vaibhav.choppycopter.GameMain;
 
 import bird.Bird;
 import ground.GroundBody;
@@ -34,31 +32,28 @@ import pipes.Pipes;
 
 public class Gameplay implements Screen, ContactListener {
 
-    private GameMain game;
+    private final GameMain game;
 
-    private World world;
+    private final World world;
 
-    private OrthographicCamera mainCamera;
-    private Viewport gameViewport;
+    private final OrthographicCamera mainCamera;
+    private final Viewport gameViewport;
 
 
-    private Array<Sprite> backgrounds = new Array<Sprite>();
-    private Array<Sprite> grounds = new Array<Sprite>();
+    private final Array<Sprite> backgrounds = new Array<>();
+    private final Array<Sprite> grounds = new Array<>();
 
-    private Bird bird;
+    private final Bird bird;
 
-    private GroundBody groundBody;
-
-    private UIHud hud;
-
-    private float timeDelaySec = 1.7f;
+    private final UIHud hud;
 
     private boolean firstTouch;
 
-    private Array<Pipes> pipesArray = new Array<Pipes>();
-    private final int DISTANCE_BW_PIPES = 200;
+    private final Array<Pipes> pipesArray = new Array<>();
 
-    private Sound scoreSound, birdDiedSound, birdFlapSound;
+    private final Sound scoreSound;
+    private final Sound birdDiedSound;
+    private final Sound birdFlapSound;
 
     public Gameplay(GameMain game) {
         this.game = game;
@@ -79,7 +74,7 @@ public class Gameplay implements Screen, ContactListener {
 
         bird = new Bird(world, GameInfo.WIDTH / 2f - 70, GameInfo.HEIGHT / 2f);
 
-        groundBody = new GroundBody(world, grounds.get(0));
+        GroundBody groundBody = new GroundBody(world, grounds.get(0));
 
         scoreSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Score.mp3"));
         birdDiedSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Dead.mp3"));
@@ -87,15 +82,15 @@ public class Gameplay implements Screen, ContactListener {
 
     }
 
-    void checkForFirstTouch(){
+    private void checkForFirstTouch() {
 
-        if(!firstTouch) {
+        if (!firstTouch) {
 
             moveBackgrounds();
             moveGrounds();
             bird.setAlive(true);
 
-            if(Gdx.input.justTouched()){
+            if (Gdx.input.justTouched()) {
                 firstTouch = true;
                 bird.activateBird();
                 createAllPipes();
@@ -103,11 +98,11 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void update(float dt) {
+    private void update() {
 
         checkForFirstTouch();
 
-        if(bird.getAlive()) {
+        if (bird.getAlive()) {
             moveBackgrounds();
             movePipes();
             moveGrounds();
@@ -117,7 +112,7 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void createAllPipes(){
+    private void createAllPipes() {
 
         RunnableAction run = new RunnableAction();
         run.setRunnable(new Runnable() {
@@ -138,55 +133,57 @@ public class Gameplay implements Screen, ContactListener {
         });
 
         SequenceAction sa = new SequenceAction();
+        float timeDelaySec = 1.7f;
         sa.addAction(Actions.delay(timeDelaySec));
         sa.addAction(run);
 
         hud.getStage().addAction(Actions.forever(sa));
     }
 
-    void birdFlap(){
-        if(Gdx.input.justTouched()) {
+    private void birdFlap() {
+        if (Gdx.input.justTouched()) {
             birdFlapSound.play();
-            bird.birdFlap();
+            if (bird.getY() < GameInfo.HEIGHT) {
+                bird.birdFlap();
+            }
         }
     }
 
-    void createBackgrounds(){
-        for(int i=0; i < 3; i++) {
+    private void createBackgrounds() {
+        for (int i = 0; i < 3; i++) {
             Sprite bg = new Sprite(new Texture("Backgrounds/bg0.png"));
             bg.setPosition(i * bg.getWidth(), 0);
             backgrounds.add(bg);
         }
     }
 
-    void createGrounds(){
-        for(int i=0; i<3; i++)
-        {
+    private void createGrounds() {
+        for (int i = 0; i < 3; i++) {
             Sprite ground = new Sprite(new Texture("Backgrounds/Ground.png"));
             ground.setPosition(i * ground.getWidth(), -ground.getHeight() / 1.5f);
             grounds.add(ground);
         }
     }
 
-    void drawBackgrounds(SpriteBatch batch){
-        for(Sprite s : backgrounds) {
+    private void drawBackgrounds(SpriteBatch batch) {
+        for (Sprite s : backgrounds) {
             batch.draw(s, s.getX(), s.getY());
         }
     }
 
-    void drawGrounds(SpriteBatch batch){
-        for(Sprite ground : grounds) {
+    private void drawGrounds(SpriteBatch batch) {
+        for (Sprite ground : grounds) {
             batch.draw(ground, ground.getX(), ground.getY());
         }
     }
 
-    void moveBackgrounds(){
+    private void moveBackgrounds() {
 
-        for(Sprite bg : backgrounds) {
+        for (Sprite bg : backgrounds) {
             float x1 = bg.getX() - 6.5f;
-            bg.setPosition(x1,bg.getY());
+            bg.setPosition(x1, bg.getY());
 
-            if(bg.getX() + GameInfo.WIDTH + (bg.getWidth()) <= mainCamera.position.x){
+            if (bg.getX() + GameInfo.WIDTH + (bg.getWidth()) <= mainCamera.position.x) {
 
                 float x2 = bg.getX() + bg.getWidth() * 3;
                 bg.setPosition(x2, bg.getY());
@@ -195,13 +192,13 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void moveGrounds(){
+    private void moveGrounds() {
 
-        for(Sprite ground : grounds) {
+        for (Sprite ground : grounds) {
             float x1 = ground.getX() - 5f;
-            ground.setPosition(x1,ground.getY());
+            ground.setPosition(x1, ground.getY());
 
-            if(ground.getX() + GameInfo.WIDTH + (ground.getWidth()) <= mainCamera.position.x){
+            if (ground.getX() + GameInfo.WIDTH + (ground.getWidth()) <= mainCamera.position.x) {
 
                 float x2 = ground.getX() + ground.getWidth() * 3;
                 ground.setPosition(x2, ground.getY());
@@ -210,36 +207,37 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void createPipes() {
+    private void createPipes() {
+        int DISTANCE_BW_PIPES = 200;
         Pipes p = new Pipes(world, GameInfo.WIDTH + DISTANCE_BW_PIPES);
         p.setMainCamera(mainCamera);
         pipesArray.add(p);
     }
 
-    void drawPipes(SpriteBatch batch) {
-        for(Pipes pipe : pipesArray){
+    private void drawPipes(SpriteBatch batch) {
+        for (Pipes pipe : pipesArray) {
             pipe.drawPipes(batch);
         }
     }
 
-    void updatePipes(){
-        for(Pipes pipe : pipesArray)
+    private void updatePipes() {
+        for (Pipes pipe : pipesArray)
             pipe.updatePipes();
     }
 
-    void movePipes(){
-        for(Pipes pipe : pipesArray){
+    private void movePipes() {
+        for (Pipes pipe : pipesArray) {
             pipe.movePipes();
         }
     }
 
-    void stopPipes(){
-        for(Pipes pipe : pipesArray){
+    private void stopPipes() {
+        for (Pipes pipe : pipesArray) {
             pipe.stopPipes();
         }
     }
 
-    void birdDied(){
+    private void birdDied() {
         bird.setAlive(false);
         bird.birdDied();
         stopPipes();
@@ -251,7 +249,7 @@ public class Gameplay implements Screen, ContactListener {
         Preferences prefs = Gdx.app.getPreferences("Data");
         int highscore = prefs.getInteger("Score");
 
-        if(highscore < hud.getScore()){
+        if (highscore < hud.getScore()) {
             prefs.putInteger("Score", hud.getScore());
             prefs.flush();
         }
@@ -269,7 +267,7 @@ public class Gameplay implements Screen, ContactListener {
     @Override
     public void render(float delta) {
 
-        update(delta);
+        update();
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -293,7 +291,7 @@ public class Gameplay implements Screen, ContactListener {
 
         bird.updateBird();
 
-        world.step(Gdx.graphics.getDeltaTime(), 6,2);
+        world.step(Gdx.graphics.getDeltaTime(), 6, 2);
 
     }
 
@@ -323,15 +321,15 @@ public class Gameplay implements Screen, ContactListener {
 
         world.dispose();
 
-        for(Sprite bg : backgrounds){
+        for (Sprite bg : backgrounds) {
             bg.getTexture().dispose();
         }
 
-        for(Sprite ground : grounds){
+        for (Sprite ground : grounds) {
             ground.getTexture().dispose();
         }
 
-        for(Pipes pipe: pipesArray){
+        for (Pipes pipe : pipesArray) {
             pipe.disposeAll();
         }
 
@@ -346,7 +344,7 @@ public class Gameplay implements Screen, ContactListener {
 
         Fixture body1, body2;
 
-        if(contact.getFixtureA().getUserData() == "Bird"){
+        if (contact.getFixtureA().getUserData() == "Bird") {
             body1 = contact.getFixtureA();
             body2 = contact.getFixtureB();
         } else {
@@ -354,22 +352,22 @@ public class Gameplay implements Screen, ContactListener {
             body2 = contact.getFixtureA();
         }
 
-        if(body1.getUserData() == "Bird" && body2.getUserData() == "Pipe") {
-            if(bird.getAlive()){
+        if (body1.getUserData() == "Bird" && body2.getUserData() == "Pipe") {
+            if (bird.getAlive()) {
                 birdDiedSound.play();
                 birdDied();
             }
         }
 
-        if(body1.getUserData() == "Bird" && body2.getUserData() == "Ground") {
-            if(bird.getAlive()){
+        if (body1.getUserData() == "Bird" && body2.getUserData() == "Ground") {
+            if (bird.getAlive()) {
                 birdDiedSound.play();
                 birdDied();
 
             }
         }
 
-        if(body1.getUserData() == "Bird" && body2.getUserData() == "Score") {
+        if (body1.getUserData() == "Bird" && body2.getUserData() == "Score") {
             scoreSound.play();
             hud.incrementScore();
         }

@@ -12,22 +12,21 @@ import helpers.GameInfo;
 
 public class GroundBody {
 
-    private World world;
-    private Body body;
+    private final World world;
 
     public GroundBody(World world, Sprite ground) {
         this.world = world;
         createGroundBody(ground);
     }
 
-    void createGroundBody (Sprite ground){
+    private void createGroundBody(Sprite ground) {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
-        bodyDef.position.set(ground.getWidth() / GameInfo.PPM , (-ground.getHeight() / 1.5f - 2) / GameInfo.PPM);
+        bodyDef.position.set(ground.getWidth() / GameInfo.PPM, (-ground.getHeight() / 1.5f - 2) / GameInfo.PPM);
 
-        body = world.createBody(bodyDef);
+        Body body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(ground.getWidth() / GameInfo.PPM, ground.getHeight() / GameInfo.PPM);

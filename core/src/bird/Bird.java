@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -18,37 +17,36 @@ import helpers.GameInfo;
 
 public class Bird extends Sprite {
 
-    private World world;
+    private final World world;
     private Body body;
 
     private boolean isAlive;
 
-    private Texture birdDead;
+    private final Texture birdDead;
 
-    private TextureAtlas birdAtlas;
-    private Animation animation;
+    private Animation<TextureAtlas.AtlasRegion> animation;
     private float elapsedTime;
 
     public Bird(World world, float x, float y) {
         super(new Texture("Birds/bird.png"));
         birdDead = new Texture("Birds/dead.png");
         this.world = world;
-        setPosition(x/3,y);
+        setPosition(x / 3, y);
         createBody();
         createAnimation();
     }
 
-    void createBody(){
+    private void createBody() {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(getX() / GameInfo.PPM, getY()/GameInfo.PPM);
+        bodyDef.position.set(getX() / GameInfo.PPM, getY() / GameInfo.PPM);
 
         body = world.createBody(bodyDef);
         body.setFixedRotation(false);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius((getHeight()/2f)/GameInfo.PPM);
+        shape.setRadius((getHeight() / 2f) / GameInfo.PPM);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -64,14 +62,13 @@ public class Bird extends Sprite {
 
     }
 
-    public void activateBird(){
+    public void activateBird() {
         isAlive = true;
         body.setActive(true);
     }
 
-    public void birdFlap(){
-
-        body.setLinearVelocity(0,5f);
+    public void birdFlap() {
+        body.setLinearVelocity(0, 5.5f);
     }
 
     public void drawIdle(SpriteBatch batch) {
@@ -80,34 +77,34 @@ public class Bird extends Sprite {
         }
     }
 
-    public void animateBird(SpriteBatch batch){
+    public void animateBird(SpriteBatch batch) {
 
-        if(isAlive) {
+        if (isAlive) {
             elapsedTime += Gdx.graphics.getDeltaTime();
-            batch.draw((TextureRegion) animation.getKeyFrame(elapsedTime, true), getX() - getWidth() / 2f, getY() - getHeight() / 2f);
+            batch.draw(animation.getKeyFrame(elapsedTime, true), getX() - getWidth() / 2f, getY() - getHeight() / 2f);
         }
     }
 
-    public void updateBird(){
+    public void updateBird() {
         setPosition(body.getPosition().x * GameInfo.PPM, body.getPosition().y * GameInfo.PPM);
     }
 
-    void createAnimation(){
-        birdAtlas = new TextureAtlas("Birds/copter.atlas");
-        animation = new Animation(1f/5f, birdAtlas.getRegions());
+    private void createAnimation() {
+        TextureAtlas birdAtlas = new TextureAtlas("Birds/copter.atlas");
+        animation = new Animation<>(1f / 5f, birdAtlas.getRegions());
 
     }
 
-    public void setAlive(boolean isAlive){
+    public void setAlive(boolean isAlive) {
         this.isAlive = isAlive;
 
     }
 
-    public boolean getAlive(){
+    public boolean getAlive() {
         return isAlive;
     }
 
-    public void birdDied(){
+    public void birdDied() {
         this.setTexture(birdDead);
 
     }

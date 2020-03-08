@@ -7,28 +7,26 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.version.vaibhverty.GameMain;
+import com.vaibhav.choppycopter.GameMain;
 
-import java.util.Random;
 
 import helpers.GameInfo;
 import hud.MainMenuButtons;
 
 public class MainMenu implements Screen {
 
-    private GameMain game;
+    private final GameMain game;
 
-    private OrthographicCamera mainCamera;
-    private Viewport gameViewport;
+    private final Viewport gameViewport;
 
-    private Texture bg;
+    private final Texture bg;
 
-    private MainMenuButtons btns;
+    private final MainMenuButtons btns;
 
     public MainMenu(GameMain game) {
         this.game = game;
 
-        mainCamera = new OrthographicCamera();
+        OrthographicCamera mainCamera = new OrthographicCamera();
         mainCamera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
@@ -52,7 +50,7 @@ public class MainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().begin();
-        game.getBatch().draw(bg,0,0);
+        game.getBatch().draw(bg, 0, 0);
 
         game.getBatch().end();
 

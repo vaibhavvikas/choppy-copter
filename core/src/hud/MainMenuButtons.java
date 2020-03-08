@@ -17,41 +17,42 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.version.vaibhverty.GameMain;
+import com.vaibhav.choppycopter.GameMain;
 
 import helpers.GameInfo;
 import scenes.Gameplay;
 
 public class MainMenuButtons {
 
-    private GameMain game;
+    private final GameMain game;
 
-    private Stage stage;
-    private Viewport gameViewport;
+    private final Stage stage;
 
     private ImageButton playBtn, scoreBtn;
 
-    private Label scoreLabel, titleLabel;
+    private Label scoreLabel, titleLabel, footerLabel;
 
-    public MainMenuButtons(GameMain game){
+    public MainMenuButtons(GameMain game) {
 
         this.game = game;
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
+        Viewport gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
         stage = new Stage(gameViewport, game.getBatch());
 
         createAndPositionButtons();
         createTitleLabel();
+        createFooterLabel();
 
         stage.addActor(titleLabel);
+        stage.addActor(footerLabel);
 
         stage.addActor(playBtn);
         stage.addActor(scoreBtn);
 
     }
 
-    void createTitleLabel(){
+    private void createTitleLabel() {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -61,11 +62,25 @@ public class MainMenuButtons {
 
         //issue
         titleLabel = new Label("Choppy Copter", new Label.LabelStyle(font, Color.WHITE));
-        titleLabel.setPosition(GameInfo.WIDTH / 2f - titleLabel.getPrefWidth()/2f, (GameInfo.HEIGHT / 2f) + (GameInfo.HEIGHT / 5f));
+        titleLabel.setPosition(GameInfo.WIDTH / 2f - titleLabel.getPrefWidth() / 2f, (GameInfo.HEIGHT / 2f) + (GameInfo.HEIGHT / 5f));
 
     }
 
-    void createAndPositionButtons(){
+    private void createFooterLabel() {
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 50;
+
+        BitmapFont font = generator.generateFont(parameter);
+
+        //issue
+        footerLabel = new Label("(c) Vaibhav Vikas", new Label.LabelStyle(font, Color.WHITE));
+        footerLabel.setPosition(GameInfo.WIDTH / 2f - footerLabel.getPrefWidth() / 2f, (GameInfo.HEIGHT / 2f) - (GameInfo.HEIGHT / 2.5f));
+
+    }
+
+    private void createAndPositionButtons() {
 
         playBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Play.png"))));
         scoreBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Score.png"))));
@@ -90,30 +105,30 @@ public class MainMenuButtons {
 
     }
 
-    void showScore(){
+    private void showScore() {
 
-        if(scoreLabel != null) {
+        if (scoreLabel != null) {
             return;
         }
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
+        parameter.size = 80;
 
         BitmapFont font = generator.generateFont(parameter);
 
         scoreLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
 
         Preferences prefs = Gdx.app.getPreferences("Data");
-        scoreLabel = new Label("High Score: " + String.valueOf(prefs.getInteger("Score")), new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label("High Score: " + prefs.getInteger("Score"), new Label.LabelStyle(font, Color.WHITE));
 
-        scoreLabel.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT/2f - GameInfo.HEIGHT/4f, Align.center);
+        scoreLabel.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f - GameInfo.HEIGHT / 4f, Align.center);
 
         stage.addActor(scoreLabel);
 
     }
 
-    public Stage getStage(){
+    public Stage getStage() {
         return this.stage;
     }
 

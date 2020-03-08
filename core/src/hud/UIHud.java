@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.version.vaibhverty.GameMain;
+import com.vaibhav.choppycopter.GameMain;
 
 import helpers.GameInfo;
 import scenes.Gameplay;
@@ -24,19 +24,16 @@ import scenes.MainMenu;
 public class UIHud {
 
     private final GameMain game;
-    private Stage stage;
-    private Viewport gameViewport;
+    private final Stage stage;
 
     private Label scoreLabel;
 
-    private ImageButton retryBtn, quitBtn;
-
     private int score;
 
-    public UIHud(GameMain game){
+    public UIHud(GameMain game) {
         this.game = game;
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
+        Viewport gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
         stage = new Stage(gameViewport, game.getBatch());
 
@@ -45,7 +42,7 @@ public class UIHud {
         stage.addActor(scoreLabel);
     }
 
-    void createLabel(){
+    private void createLabel() {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -59,12 +56,12 @@ public class UIHud {
 
     }
 
-    public void createButtons(){
-        retryBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Retry.png"))));
-        quitBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Quit.png"))));
+    public void createButtons() {
+        ImageButton retryBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Retry.png"))));
+        ImageButton quitBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Quit.png"))));
 
-        retryBtn.setPosition(GameInfo.WIDTH / 2f - retryBtn.getWidth() /2 - GameInfo.WIDTH / 8f, GameInfo.HEIGHT / 2f - 50);
-        quitBtn.setPosition(GameInfo.WIDTH / 2f - quitBtn.getWidth()/2 + GameInfo.WIDTH / 8f, GameInfo.HEIGHT / 2f - 50);
+        retryBtn.setPosition(GameInfo.WIDTH / 2f - retryBtn.getWidth() / 2 - GameInfo.WIDTH / 8f, GameInfo.HEIGHT / 2f - 50);
+        quitBtn.setPosition(GameInfo.WIDTH / 2f - quitBtn.getWidth() / 2 + GameInfo.WIDTH / 8f, GameInfo.HEIGHT / 2f - 50);
 
         retryBtn.addListener(new ChangeListener() {
 
@@ -89,23 +86,23 @@ public class UIHud {
 
     }
 
-    public void incrementScore(){
+    public void incrementScore() {
         score++;
         scoreLabel.setText(String.valueOf(score));
     }
 
-    public void showScore(){
+    public void showScore() {
         scoreLabel.setText(String.valueOf(score));
         stage.addActor(scoreLabel);
 
         // Add GameOver
     }
 
-    public int getScore(){
+    public int getScore() {
         return this.score;
     }
 
-    public Stage getStage(){
+    public Stage getStage() {
         return this.stage;
     }
 }
