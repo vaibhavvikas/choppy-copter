@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.version.vaibhverty.GameMain;
+import com.vaibhav.choppycopter.GameMain;
 
 import helpers.GameInfo;
 import scenes.Gameplay;
@@ -32,7 +32,7 @@ public class MainMenuButtons {
 
     private Label scoreLabel, titleLabel, footerLabel;
 
-    public MainMenuButtons(GameMain game){
+    public MainMenuButtons(GameMain game) {
 
         this.game = game;
 
@@ -52,7 +52,7 @@ public class MainMenuButtons {
 
     }
 
-    private void createTitleLabel(){
+    private void createTitleLabel() {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -62,11 +62,11 @@ public class MainMenuButtons {
 
         //issue
         titleLabel = new Label("Choppy Copter", new Label.LabelStyle(font, Color.WHITE));
-        titleLabel.setPosition(GameInfo.WIDTH / 2f - titleLabel.getPrefWidth()/2f, (GameInfo.HEIGHT / 2f) + (GameInfo.HEIGHT / 5f));
+        titleLabel.setPosition(GameInfo.WIDTH / 2f - titleLabel.getPrefWidth() / 2f, (GameInfo.HEIGHT / 2f) + (GameInfo.HEIGHT / 5f));
 
     }
 
-    private void createFooterLabel(){
+    private void createFooterLabel() {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -76,11 +76,11 @@ public class MainMenuButtons {
 
         //issue
         footerLabel = new Label("(c) Vaibhav Vikas", new Label.LabelStyle(font, Color.WHITE));
-        footerLabel.setPosition(GameInfo.WIDTH / 2f - footerLabel.getPrefWidth()/2f, (GameInfo.HEIGHT / 2f) - (GameInfo.HEIGHT/ 2.5f));
+        footerLabel.setPosition(GameInfo.WIDTH / 2f - footerLabel.getPrefWidth() / 2f, (GameInfo.HEIGHT / 2f) - (GameInfo.HEIGHT / 2.5f));
 
     }
 
-    private void createAndPositionButtons(){
+    private void createAndPositionButtons() {
 
         playBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Play.png"))));
         scoreBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Score.png"))));
@@ -105,9 +105,9 @@ public class MainMenuButtons {
 
     }
 
-    private void showScore(){
+    private void showScore() {
 
-        if(scoreLabel != null) {
+        if (scoreLabel != null) {
             return;
         }
 
@@ -122,13 +122,13 @@ public class MainMenuButtons {
         Preferences prefs = Gdx.app.getPreferences("Data");
         scoreLabel = new Label("High Score: " + prefs.getInteger("Score"), new Label.LabelStyle(font, Color.WHITE));
 
-        scoreLabel.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT/2f - GameInfo.HEIGHT/4f, Align.center);
+        scoreLabel.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f - GameInfo.HEIGHT / 4f, Align.center);
 
         stage.addActor(scoreLabel);
 
     }
 
-    public Stage getStage(){
+    public Stage getStage() {
         return this.stage;
     }
 

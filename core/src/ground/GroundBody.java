@@ -19,12 +19,12 @@ public class GroundBody {
         createGroundBody(ground);
     }
 
-    private void createGroundBody(Sprite ground){
+    private void createGroundBody(Sprite ground) {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
-        bodyDef.position.set(ground.getWidth() / GameInfo.PPM , (-ground.getHeight() / 1.5f - 2) / GameInfo.PPM);
+        bodyDef.position.set(ground.getWidth() / GameInfo.PPM, (-ground.getHeight() / 1.5f - 2) / GameInfo.PPM);
 
         Body body = world.createBody(bodyDef);
 

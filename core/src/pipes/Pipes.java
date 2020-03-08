@@ -34,11 +34,11 @@ public class Pipes {
 
     private void createPipes(float x, float y) {
 
-        pipe1 = new Sprite(new Texture("Pipes/pipe"+random.nextInt(3)+".png"));
-        pipe2 = new Sprite(new Texture("Pipes/pipe"+random.nextInt(3)+".png"));
+        pipe1 = new Sprite(new Texture("Pipes/pipe" + random.nextInt(3) + ".png"));
+        pipe2 = new Sprite(new Texture("Pipes/pipe" + random.nextInt(3) + ".png"));
 
         float DISTANCE_BETWEEN_PIPES = 450;
-        pipe1.setPosition(x,y + DISTANCE_BETWEEN_PIPES);
+        pipe1.setPosition(x, y + DISTANCE_BETWEEN_PIPES);
         pipe2.setPosition(x, y - DISTANCE_BETWEEN_PIPES);
 
         BodyDef bodyDef = new BodyDef();
@@ -54,7 +54,7 @@ public class Pipes {
         body2.setFixedRotation(false);
 
         //Score
-        bodyDef.position.set( x / GameInfo.PPM, y / GameInfo.PPM);
+        bodyDef.position.set(x / GameInfo.PPM, y / GameInfo.PPM);
         body3 = world.createBody(bodyDef);
         body3.setFixedRotation(false);
 
@@ -71,7 +71,7 @@ public class Pipes {
         Fixture fixture2 = body2.createFixture(fixtureDef);
         fixture2.setUserData("Pipe");
 
-        shape.setAsBox((3 / GameInfo.PPM), (pipe1.getHeight() / 2f) / GameInfo.PPM );
+        shape.setAsBox((3 / GameInfo.PPM), (pipe1.getHeight() / 2f) / GameInfo.PPM);
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = GameInfo.SCORE;
         fixtureDef.isSensor = true;
@@ -85,8 +85,8 @@ public class Pipes {
 
     public void drawPipes(SpriteBatch batch) {
 
-        batch.draw(pipe1, pipe1.getX() - pipe1.getWidth() /2f, pipe1.getY() - pipe1.getHeight() /2f);
-        batch.draw(pipe2, pipe2.getX() - pipe2.getWidth() /2f, pipe2.getY() - pipe2.getHeight() /2f);
+        batch.draw(pipe1, pipe1.getX() - pipe1.getWidth() / 2f, pipe1.getY() - pipe1.getHeight() / 2f);
+        batch.draw(pipe2, pipe2.getX() - pipe2.getWidth() / 2f, pipe2.getY() - pipe2.getHeight() / 2f);
 
     }
 
@@ -98,20 +98,20 @@ public class Pipes {
 
     public void movePipes() {
 
-        body1.setLinearVelocity(-3f,0);
-        body2.setLinearVelocity(-3f,0);
+        body1.setLinearVelocity(-3f, 0);
+        body2.setLinearVelocity(-3f, 0);
         body3.setLinearVelocity(-3f, 0);
 
-        if(pipe1.getX() + (GameInfo.WIDTH / 2f) + 60 < mainCamera.position.x ){
+        if (pipe1.getX() + (GameInfo.WIDTH / 2f) + 60 < mainCamera.position.x) {
             body1.setActive(false);
             body2.setActive(false);
             body3.setActive(false);
         }
     }
 
-    public void stopPipes(){
-        body1.setLinearVelocity(0,0);
-        body2.setLinearVelocity(0,0);
+    public void stopPipes() {
+        body1.setLinearVelocity(0, 0);
+        body2.setLinearVelocity(0, 0);
         body3.setLinearVelocity(0, 0);
     }
 
@@ -127,7 +127,7 @@ public class Pipes {
     }
 
 
-    public void disposeAll(){
+    public void disposeAll() {
         pipe1.getTexture().dispose();
         pipe2.getTexture().dispose();
     }
