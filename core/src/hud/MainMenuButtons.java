@@ -31,7 +31,7 @@ public class MainMenuButtons {
 
     private ImageButton playBtn, scoreBtn;
 
-    private Label scoreLabel, titleLabel;
+    private Label scoreLabel, titleLabel, footerLabel;
 
     public MainMenuButtons(GameMain game){
 
@@ -43,15 +43,17 @@ public class MainMenuButtons {
 
         createAndPositionButtons();
         createTitleLabel();
+        createFooterLabel();
 
         stage.addActor(titleLabel);
+        stage.addActor(footerLabel);
 
         stage.addActor(playBtn);
         stage.addActor(scoreBtn);
 
     }
 
-    void createTitleLabel(){
+    private void createTitleLabel(){
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -65,7 +67,21 @@ public class MainMenuButtons {
 
     }
 
-    void createAndPositionButtons(){
+    private void createFooterLabel(){
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 50;
+
+        BitmapFont font = generator.generateFont(parameter);
+
+        //issue
+        footerLabel = new Label("(c) Vaibhav Vikas", new Label.LabelStyle(font, Color.WHITE));
+        footerLabel.setPosition(GameInfo.WIDTH / 2f - footerLabel.getPrefWidth()/2f, (GameInfo.HEIGHT / 2f) - (GameInfo.HEIGHT/ 2.5f));
+
+    }
+
+    private void createAndPositionButtons(){
 
         playBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Play.png"))));
         scoreBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Score.png"))));
@@ -90,7 +106,7 @@ public class MainMenuButtons {
 
     }
 
-    void showScore(){
+    private void showScore(){
 
         if(scoreLabel != null) {
             return;
@@ -105,7 +121,7 @@ public class MainMenuButtons {
         scoreLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
 
         Preferences prefs = Gdx.app.getPreferences("Data");
-        scoreLabel = new Label("High Score: " + String.valueOf(prefs.getInteger("Score")), new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label("High Score: " + prefs.getInteger("Score"), new Label.LabelStyle(font, Color.WHITE));
 
         scoreLabel.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT/2f - GameInfo.HEIGHT/4f, Align.center);
 
