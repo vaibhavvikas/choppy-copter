@@ -17,14 +17,12 @@ import helpers.GameInfo;
 
 public class Pipes {
 
-    private World world;
+    private final World world;
     private Body body1, body2, body3;
 
     private Sprite pipe1, pipe2;
 
-    private final float DISTANCE_BETWEEN_PIPES = 450;
-
-    private Random random = new Random();
+    private final Random random = new Random();
 
     private OrthographicCamera mainCamera;
 
@@ -34,11 +32,12 @@ public class Pipes {
 
     }
 
-    void createPipes(float x, float y) {
+    private void createPipes(float x, float y) {
 
         pipe1 = new Sprite(new Texture("Pipes/pipe"+random.nextInt(3)+".png"));
         pipe2 = new Sprite(new Texture("Pipes/pipe"+random.nextInt(3)+".png"));
 
+        float DISTANCE_BETWEEN_PIPES = 450;
         pipe1.setPosition(x,y + DISTANCE_BETWEEN_PIPES);
         pipe2.setPosition(x, y - DISTANCE_BETWEEN_PIPES);
 
@@ -120,7 +119,7 @@ public class Pipes {
         this.mainCamera = mainCamera;
     }
 
-    float getRandomY() {
+    private float getRandomY() {
         float max = GameInfo.HEIGHT / 2f + 225f;
         float min = GameInfo.HEIGHT / 2f - 225f;
 

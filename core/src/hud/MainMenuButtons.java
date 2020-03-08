@@ -24,10 +24,9 @@ import scenes.Gameplay;
 
 public class MainMenuButtons {
 
-    private GameMain game;
+    private final GameMain game;
 
-    private Stage stage;
-    private Viewport gameViewport;
+    private final Stage stage;
 
     private ImageButton playBtn, scoreBtn;
 
@@ -37,7 +36,7 @@ public class MainMenuButtons {
 
         this.game = game;
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
+        Viewport gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
         stage = new Stage(gameViewport, game.getBatch());
 

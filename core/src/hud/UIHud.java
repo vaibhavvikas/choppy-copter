@@ -24,19 +24,16 @@ import scenes.MainMenu;
 public class UIHud {
 
     private final GameMain game;
-    private Stage stage;
-    private Viewport gameViewport;
+    private final Stage stage;
 
     private Label scoreLabel;
-
-    private ImageButton retryBtn, quitBtn;
 
     private int score;
 
     public UIHud(GameMain game){
         this.game = game;
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
+        Viewport gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
         stage = new Stage(gameViewport, game.getBatch());
 
@@ -45,7 +42,7 @@ public class UIHud {
         stage.addActor(scoreLabel);
     }
 
-    void createLabel(){
+    private void createLabel(){
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/04b_19.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -60,8 +57,8 @@ public class UIHud {
     }
 
     public void createButtons(){
-        retryBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Retry.png"))));
-        quitBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Quit.png"))));
+        ImageButton retryBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Retry.png"))));
+        ImageButton quitBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Quit.png"))));
 
         retryBtn.setPosition(GameInfo.WIDTH / 2f - retryBtn.getWidth() /2 - GameInfo.WIDTH / 8f, GameInfo.HEIGHT / 2f - 50);
         quitBtn.setPosition(GameInfo.WIDTH / 2f - quitBtn.getWidth()/2 + GameInfo.WIDTH / 8f, GameInfo.HEIGHT / 2f - 50);

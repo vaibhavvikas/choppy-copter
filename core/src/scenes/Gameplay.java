@@ -24,8 +24,6 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.version.vaibhverty.GameMain;
 
-import java.util.Random;
-
 import bird.Bird;
 import ground.GroundBody;
 import helpers.GameInfo;
@@ -34,31 +32,28 @@ import pipes.Pipes;
 
 public class Gameplay implements Screen, ContactListener {
 
-    private GameMain game;
+    private final GameMain game;
 
-    private World world;
+    private final World world;
 
-    private OrthographicCamera mainCamera;
-    private Viewport gameViewport;
+    private final OrthographicCamera mainCamera;
+    private final Viewport gameViewport;
 
 
-    private Array<Sprite> backgrounds = new Array<>();
-    private Array<Sprite> grounds = new Array<>();
+    private final Array<Sprite> backgrounds = new Array<>();
+    private final Array<Sprite> grounds = new Array<>();
 
-    private Bird bird;
+    private final Bird bird;
 
-    private GroundBody groundBody;
-
-    private UIHud hud;
-
-    private float timeDelaySec = 1.7f;
+    private final UIHud hud;
 
     private boolean firstTouch;
 
-    private Array<Pipes> pipesArray = new Array<>();
-    private final int DISTANCE_BW_PIPES = 200;
+    private final Array<Pipes> pipesArray = new Array<>();
 
-    private Sound scoreSound, birdDiedSound, birdFlapSound;
+    private final Sound scoreSound;
+    private final Sound birdDiedSound;
+    private final Sound birdFlapSound;
 
     public Gameplay(GameMain game) {
         this.game = game;
@@ -79,7 +74,7 @@ public class Gameplay implements Screen, ContactListener {
 
         bird = new Bird(world, GameInfo.WIDTH / 2f - 70, GameInfo.HEIGHT / 2f);
 
-        groundBody = new GroundBody(world, grounds.get(0));
+        GroundBody groundBody = new GroundBody(world, grounds.get(0));
 
         scoreSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Score.mp3"));
         birdDiedSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Dead.mp3"));
@@ -103,7 +98,7 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    private void update(float dt) {
+    private void update() {
 
         checkForFirstTouch();
 
@@ -138,6 +133,7 @@ public class Gameplay implements Screen, ContactListener {
         });
 
         SequenceAction sa = new SequenceAction();
+        float timeDelaySec = 1.7f;
         sa.addAction(Actions.delay(timeDelaySec));
         sa.addAction(run);
 
@@ -213,6 +209,7 @@ public class Gameplay implements Screen, ContactListener {
     }
 
     private void createPipes() {
+        int DISTANCE_BW_PIPES = 200;
         Pipes p = new Pipes(world, GameInfo.WIDTH + DISTANCE_BW_PIPES);
         p.setMainCamera(mainCamera);
         pipesArray.add(p);
@@ -271,7 +268,7 @@ public class Gameplay implements Screen, ContactListener {
     @Override
     public void render(float delta) {
 
-        update(delta);
+        update();
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

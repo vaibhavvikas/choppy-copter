@@ -17,14 +17,13 @@ import helpers.GameInfo;
 
 public class Bird extends Sprite {
 
-    private World world;
+    private final World world;
     private Body body;
 
     private boolean isAlive;
 
-    private Texture birdDead;
+    private final Texture birdDead;
 
-    private TextureAtlas birdAtlas;
     private Animation<TextureAtlas.AtlasRegion> animation;
     private float elapsedTime;
 
@@ -91,7 +90,7 @@ public class Bird extends Sprite {
     }
 
     private void createAnimation(){
-        birdAtlas = new TextureAtlas("Birds/copter.atlas");
+        TextureAtlas birdAtlas = new TextureAtlas("Birds/copter.atlas");
         animation = new Animation<>(1f/5f, birdAtlas.getRegions());
 
     }
