@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -26,7 +25,7 @@ public class Bird extends Sprite {
     private Texture birdDead;
 
     private TextureAtlas birdAtlas;
-    private Animation animation;
+    private Animation<TextureAtlas.AtlasRegion> animation;
     private float elapsedTime;
 
     public Bird(World world, float x, float y) {
@@ -38,7 +37,7 @@ public class Bird extends Sprite {
         createAnimation();
     }
 
-    void createBody(){
+    private void createBody(){
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -70,8 +69,7 @@ public class Bird extends Sprite {
     }
 
     public void birdFlap(){
-
-        body.setLinearVelocity(0,5f);
+        body.setLinearVelocity(0,5.5f);
     }
 
     public void drawIdle(SpriteBatch batch) {
@@ -84,7 +82,7 @@ public class Bird extends Sprite {
 
         if(isAlive) {
             elapsedTime += Gdx.graphics.getDeltaTime();
-            batch.draw((TextureRegion) animation.getKeyFrame(elapsedTime, true), getX() - getWidth() / 2f, getY() - getHeight() / 2f);
+            batch.draw(animation.getKeyFrame(elapsedTime, true), getX() - getWidth() / 2f, getY() - getHeight() / 2f);
         }
     }
 
@@ -92,9 +90,9 @@ public class Bird extends Sprite {
         setPosition(body.getPosition().x * GameInfo.PPM, body.getPosition().y * GameInfo.PPM);
     }
 
-    void createAnimation(){
+    private void createAnimation(){
         birdAtlas = new TextureAtlas("Birds/copter.atlas");
-        animation = new Animation(1f/5f, birdAtlas.getRegions());
+        animation = new Animation<>(1f/5f, birdAtlas.getRegions());
 
     }
 

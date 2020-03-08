@@ -42,8 +42,8 @@ public class Gameplay implements Screen, ContactListener {
     private Viewport gameViewport;
 
 
-    private Array<Sprite> backgrounds = new Array<Sprite>();
-    private Array<Sprite> grounds = new Array<Sprite>();
+    private Array<Sprite> backgrounds = new Array<>();
+    private Array<Sprite> grounds = new Array<>();
 
     private Bird bird;
 
@@ -55,7 +55,7 @@ public class Gameplay implements Screen, ContactListener {
 
     private boolean firstTouch;
 
-    private Array<Pipes> pipesArray = new Array<Pipes>();
+    private Array<Pipes> pipesArray = new Array<>();
     private final int DISTANCE_BW_PIPES = 200;
 
     private Sound scoreSound, birdDiedSound, birdFlapSound;
@@ -87,7 +87,7 @@ public class Gameplay implements Screen, ContactListener {
 
     }
 
-    void checkForFirstTouch(){
+    private void checkForFirstTouch(){
 
         if(!firstTouch) {
 
@@ -103,7 +103,7 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void update(float dt) {
+    private void update(float dt) {
 
         checkForFirstTouch();
 
@@ -117,7 +117,7 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void createAllPipes(){
+    private void createAllPipes(){
 
         RunnableAction run = new RunnableAction();
         run.setRunnable(new Runnable() {
@@ -144,14 +144,16 @@ public class Gameplay implements Screen, ContactListener {
         hud.getStage().addAction(Actions.forever(sa));
     }
 
-    void birdFlap(){
+    private void birdFlap(){
         if(Gdx.input.justTouched()) {
             birdFlapSound.play();
-            bird.birdFlap();
+            if (bird.getY() < GameInfo.HEIGHT) {
+                bird.birdFlap();
+            }
         }
     }
 
-    void createBackgrounds(){
+    private void createBackgrounds(){
         for(int i=0; i < 3; i++) {
             Sprite bg = new Sprite(new Texture("Backgrounds/bg0.png"));
             bg.setPosition(i * bg.getWidth(), 0);
@@ -159,7 +161,7 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void createGrounds(){
+    private void createGrounds(){
         for(int i=0; i<3; i++)
         {
             Sprite ground = new Sprite(new Texture("Backgrounds/Ground.png"));
@@ -168,19 +170,19 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void drawBackgrounds(SpriteBatch batch){
+    private void drawBackgrounds(SpriteBatch batch){
         for(Sprite s : backgrounds) {
             batch.draw(s, s.getX(), s.getY());
         }
     }
 
-    void drawGrounds(SpriteBatch batch){
+    private void drawGrounds(SpriteBatch batch){
         for(Sprite ground : grounds) {
             batch.draw(ground, ground.getX(), ground.getY());
         }
     }
 
-    void moveBackgrounds(){
+    private void moveBackgrounds(){
 
         for(Sprite bg : backgrounds) {
             float x1 = bg.getX() - 6.5f;
@@ -195,7 +197,7 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void moveGrounds(){
+    private void moveGrounds(){
 
         for(Sprite ground : grounds) {
             float x1 = ground.getX() - 5f;
@@ -210,36 +212,36 @@ public class Gameplay implements Screen, ContactListener {
         }
     }
 
-    void createPipes() {
+    private void createPipes() {
         Pipes p = new Pipes(world, GameInfo.WIDTH + DISTANCE_BW_PIPES);
         p.setMainCamera(mainCamera);
         pipesArray.add(p);
     }
 
-    void drawPipes(SpriteBatch batch) {
+    private void drawPipes(SpriteBatch batch) {
         for(Pipes pipe : pipesArray){
             pipe.drawPipes(batch);
         }
     }
 
-    void updatePipes(){
+    private void updatePipes(){
         for(Pipes pipe : pipesArray)
             pipe.updatePipes();
     }
 
-    void movePipes(){
+    private void movePipes(){
         for(Pipes pipe : pipesArray){
             pipe.movePipes();
         }
     }
 
-    void stopPipes(){
+    private void stopPipes(){
         for(Pipes pipe : pipesArray){
             pipe.stopPipes();
         }
     }
 
-    void birdDied(){
+    private void birdDied(){
         bird.setAlive(false);
         bird.birdDied();
         stopPipes();
