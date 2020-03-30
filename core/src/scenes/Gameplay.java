@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vaibhav.choppycopter.GameMain;
 
@@ -61,8 +61,7 @@ public class Gameplay implements Screen, ContactListener {
         mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
         mainCamera.position.set(GameInfo.WIDTH / 4f, GameInfo.HEIGHT / 2f, 0);
 
-        gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
-
+        gameViewport = new ScreenViewport(mainCamera);
 
         hud = new UIHud(game);
 
@@ -79,7 +78,6 @@ public class Gameplay implements Screen, ContactListener {
         scoreSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Score.mp3"));
         birdDiedSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Dead.mp3"));
         birdFlapSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Fly.mp3"));
-
     }
 
     private void checkForFirstTouch() {
@@ -108,7 +106,6 @@ public class Gameplay implements Screen, ContactListener {
             moveGrounds();
             birdFlap();
             updatePipes();
-
         }
     }
 
@@ -118,16 +115,6 @@ public class Gameplay implements Screen, ContactListener {
         run.setRunnable(new Runnable() {
             @Override
             public void run() {
-/*                if(hud.getScore() > 20){
-                    timeDelaySec = 1.5f;
-                } else if (hud.getScore() > 15){
-                    timeDelaySec = 1.6f;
-                } else if (hud.getScore() > 10) {
-                    timeDelaySec = 2f;
-                } else if (hud.getScore() > 5) {
-                    timeDelaySec = 2.3f;
-                }
-*/
                 createPipes();
             }
         });
@@ -292,13 +279,11 @@ public class Gameplay implements Screen, ContactListener {
         bird.updateBird();
 
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
-
     }
 
     @Override
     public void resize(int width, int height) {
         gameViewport.update(width, height);
-
     }
 
     @Override
