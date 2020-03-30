@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.vaibhav.choppycopter.GameMain;
@@ -30,7 +32,7 @@ public class MainMenu implements Screen {
         mainCamera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
+        gameViewport = new ExtendViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
 
         bg = new Texture("Backgrounds/bg0.png");
         btns = new MainMenuButtons(game);

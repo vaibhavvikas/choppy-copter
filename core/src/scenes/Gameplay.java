@@ -63,7 +63,6 @@ public class Gameplay implements Screen, ContactListener {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
 
-
         hud = new UIHud(game);
 
         createBackgrounds();
@@ -79,7 +78,6 @@ public class Gameplay implements Screen, ContactListener {
         scoreSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Score.mp3"));
         birdDiedSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Dead.mp3"));
         birdFlapSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Fly.mp3"));
-
     }
 
     private void checkForFirstTouch() {
@@ -108,7 +106,6 @@ public class Gameplay implements Screen, ContactListener {
             moveGrounds();
             birdFlap();
             updatePipes();
-
         }
     }
 
@@ -292,13 +289,11 @@ public class Gameplay implements Screen, ContactListener {
         bird.updateBird();
 
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
-
     }
 
     @Override
     public void resize(int width, int height) {
         gameViewport.update(width, height);
-
     }
 
     @Override

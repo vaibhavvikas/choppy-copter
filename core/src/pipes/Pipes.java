@@ -33,14 +33,21 @@ public class Pipes {
     }
 
     private void createPipes(float x, float y) {
+        int nextInt = this.random.nextInt(9);
 
-        pipe1 = new Sprite(new Texture("Pipes/pipe" + random.nextInt(3) + ".png"));
-        pipe2 = new Sprite(new Texture("Pipes/pipe" + random.nextInt(3) + ".png"));
-
-        float DISTANCE_BETWEEN_PIPES = 450;
-        pipe1.setPosition(x, y + DISTANCE_BETWEEN_PIPES);
-        pipe2.setPosition(x, y - DISTANCE_BETWEEN_PIPES);
-
+        if (nextInt == 5) {
+            String str = "Pipes/alien.png";
+            this.pipe1 = new Sprite(new Texture(str));
+            this.pipe2 = new Sprite(new Texture(str));
+            this.pipe1.setPosition(x, y + 250.0f);
+            this.pipe2.setPosition(x, y - 250.0f);
+        } else {
+            pipe1 = new Sprite(new Texture("Pipes/pipe" + random.nextInt(3) + ".png"));
+            pipe2 = new Sprite(new Texture("Pipes/pipe" + random.nextInt(3) + ".png"));
+            float DISTANCE_BETWEEN_PIPES = 500;
+            pipe1.setPosition(x, y + DISTANCE_BETWEEN_PIPES);
+            pipe2.setPosition(x, y - DISTANCE_BETWEEN_PIPES);
+        }
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
 
@@ -58,7 +65,6 @@ public class Pipes {
         body3 = world.createBody(bodyDef);
         body3.setFixedRotation(false);
 
-
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((pipe1.getWidth() / 2f) / GameInfo.PPM, (pipe1.getHeight() / 2f) / GameInfo.PPM);
 
@@ -71,7 +77,7 @@ public class Pipes {
         Fixture fixture2 = body2.createFixture(fixtureDef);
         fixture2.setUserData("Pipe");
 
-        shape.setAsBox((3 / GameInfo.PPM), (pipe1.getHeight() / 2f) / GameInfo.PPM);
+        shape.setAsBox((3 / GameInfo.PPM), (GameInfo.HEIGHT) / GameInfo.PPM);
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = GameInfo.SCORE;
         fixtureDef.isSensor = true;
@@ -120,8 +126,8 @@ public class Pipes {
     }
 
     private float getRandomY() {
-        float max = GameInfo.HEIGHT / 2f + 225f;
-        float min = GameInfo.HEIGHT / 2f - 225f;
+        float max = GameInfo.HEIGHT / 2f + 250f;
+        float min = GameInfo.HEIGHT / 2f - 250f;
 
         return random.nextFloat() * (max - min) + min + 50;
     }
