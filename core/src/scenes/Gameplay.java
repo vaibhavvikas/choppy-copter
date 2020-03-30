@@ -115,16 +115,6 @@ public class Gameplay implements Screen, ContactListener {
         run.setRunnable(new Runnable() {
             @Override
             public void run() {
-/*                if(hud.getScore() > 20){
-                    timeDelaySec = 1.5f;
-                } else if (hud.getScore() > 15){
-                    timeDelaySec = 1.6f;
-                } else if (hud.getScore() > 10) {
-                    timeDelaySec = 2f;
-                } else if (hud.getScore() > 5) {
-                    timeDelaySec = 2.3f;
-                }
-*/
                 createPipes();
             }
         });
