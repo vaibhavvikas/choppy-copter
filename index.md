@@ -9,4 +9,11 @@
 
 An Android Game made using libgdx and java on Andropid Studio
 
-[![](https://github.com/vaibhavvikas/choppy-copter/raw/gh-pages/src/choppy_copter.gif)](#)
+[![Gameplay](https://github.com/vaibhavvikas/choppy-copter/raw/gh-pages/src/choppy_copter.gif)](#)
+
+## Features:
+
+1. An Android game built using libgdx, where user need to fly the copter preventing it from hitting the obstacles.
+2. The application has realtime score tracking, where the user's high score are updated to the database.
+
+Download Link: [ChoppyCopter.apk](https://github.com/vaibhavvikas/choppy-copter/releases/download/1.1/ChoppyCopter.apk)
